@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sellator | Quân Sư Chiến Lược</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Be+Vietnam+Pro:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: oklch(98% 0.006 82);
+      --bg-section: oklch(96% 0.008 82);
+      --bg-dark: oklch(18% 0.018 255);
+      --text: oklch(18% 0.015 255);
+      --text-muted: oklch(48% 0.012 255);
+      --gold: oklch(72% 0.14 78);
+      --gold-light: oklch(92% 0.06 82);
+      --gold-dark: oklch(55% 0.13 72);
+      --border: oklch(88% 0.008 82);
+      --white: oklch(99% 0.003 82);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Be Vietnam Pro', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Cormorant Garamond', serif;
+      line-height: 1.15;
+      font-weight: 600;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(252, 249, 244, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 60px;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 72px;
+      transition: box-shadow 0.3s;
+    }
+    nav.scrolled { box-shadow: 0 2px 24px rgba(0,0,0,0.06); }
+
+    .nav-logo {
+      display: flex; align-items: center; gap: 12px;
+      text-decoration: none; color: var(--text);
+    }
+    .nav-logo img { width: 36px; height: 36px; border-radius: 8px; }
+    .nav-logo-text { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 700; letter-spacing: 0.02em; }
+
+    .nav-links { display: flex; align-items: center; gap: 36px; list-style: none; }
+    .nav-links a {
+      text-decoration: none; color: var(--text-muted); font-size: 14px; font-weight: 500;
+      letter-spacing: 0.02em; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-cta {
+      background: var(--text); color: var(--white);
+      padding: 10px 24px; border-radius: 4px; font-size: 13px;
+      font-weight: 600; text-decoration: none; letter-spacing: 0.04em;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .nav-cta:hover { background: var(--gold-dark); transform: translateY(-1px); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: grid; grid-template-columns: 1fr 1fr;
+      padding-top: 72px;
+    }
+    .hero-left {
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 80px 60px 80px 80px;
+    }
+    .hero-eyebrow {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--gold-dark);
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 32px;
+    }
+    .hero-eyebrow::before {
+      content: ''; display: block; width: 32px; height: 1px; background: var(--gold);
+    }
+    .hero-title {
+      font-size: clamp(52px, 5.5vw, 84px);
+      font-weight: 600;
+      line-height: 1.08;
+      color: var(--text);
+      margin-bottom: 28px;
+    }
+    .hero-title em { font-style: italic; color: var(--gold-dark); }
+    .hero-subtitle {
+      font-size: 17px; color: var(--text-muted);
+      max-width: 440px; line-height: 1.75;
+      margin-bottom: 52px;
+      font-weight: 400;
+    }
+    .hero-actions { display: flex; gap: 16px; align-items: center; }
+    .btn-primary {
+      background: var(--text); color: var(--white);
+      padding: 16px 36px; border-radius: 4px;
+      font-size: 14px; font-weight: 600; letter-spacing: 0.05em;
+      text-decoration: none; transition: all 0.2s;
+      display: inline-block;
+    }
+    .btn-primary:hover { background: var(--gold-dark); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
+    .btn-ghost {
+      color: var(--text-muted); font-size: 14px; font-weight: 500;
+      text-decoration: none; letter-spacing: 0.02em;
+      display: flex; align-items: center; gap: 8px;
+      transition: color 0.2s;
+    }
+    .btn-ghost:hover { color: var(--text); }
+    .btn-ghost::after { content: '→'; transition: transform 0.2s; }
+    .btn-ghost:hover::after { transform: translateX(4px); }
+
+    .hero-stats {
+      display: flex; gap: 48px; margin-top: 72px;
+      padding-top: 40px; border-top: 1px solid var(--border);
+    }
+    .hero-stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 42px; font-weight: 700; line-height: 1;
+      color: var(--text); display: block;
+    }
+    .hero-stat-label { font-size: 12px; color: var(--text-muted); margin-top: 4px; font-weight: 500; }
+
+    .hero-right {
+      background: var(--bg-dark);
+      position: relative; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .hero-right-inner {
+      padding: 80px 60px;
+      display: flex; flex-direction: column; gap: 24px;
+      width: 100%; max-width: 480px;
+    }
+    .hero-quote-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px; padding: 32px 36px;
+    }
+    .hero-quote-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px; font-style: italic;
+      color: var(--white); line-height: 1.4; margin-bottom: 16px;
+    }
+    .hero-quote-source { font-size: 12px; color: rgba(255,255,255,0.4); letter-spacing: 0.1em; text-transform: uppercase; }
+    .hero-value-list { display: flex; flex-direction: column; gap: 12px; }
+    .hero-value-item {
+      display: flex; align-items: flex-start; gap: 16px;
+      padding: 20px 24px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 8px;
+    }
+    .hero-value-icon {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--gold); display: flex; align-items: center;
+      justify-content: center; flex-shrink: 0;
+      font-family: 'Cormorant Garamond', serif; font-weight: 700;
+      color: var(--text); font-size: 16px;
+    }
+    .hero-value-name {
+      font-weight: 600; font-size: 14px; color: var(--white);
+      margin-bottom: 2px;
+    }
+    .hero-value-desc { font-size: 13px; color: rgba(255,255,255,0.45); line-height: 1.5; }
+
+    .hero-right-deco {
+      position: absolute; bottom: -60px; right: -60px;
+      width: 280px; height: 280px; border-radius: 50%;
+      background: radial-gradient(circle, oklch(72% 0.14 78 / 0.12), transparent 70%);
+    }
+
+    /* ── SECTION COMMONS ── */
+    section { padding: 100px 80px; }
+    .section-eyebrow {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--gold-dark);
+      display: flex; align-items: center; gap: 12px; margin-bottom: 20px;
+    }
+    .section-eyebrow::before { content: ''; display: block; width: 24px; height: 1px; background: var(--gold); }
+    .section-title {
+      font-size: clamp(36px, 3.5vw, 56px);
+      font-weight: 600; margin-bottom: 20px;
+    }
+    .section-lead { font-size: 17px; color: var(--text-muted); line-height: 1.75; max-width: 620px; }
+
+    /* ── ABOUT ── */
+    #about { background: var(--bg-section); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .about-visual {
+      aspect-ratio: 4/5; background: transparent;
+      border-radius: 2px; position: relative; overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .about-visual-inner {
+      position: absolute; inset: 0; display: flex; flex-direction: column;
+      justify-content: flex-end; padding: 40px;
+    }
+    .about-visual-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 64px; font-weight: 700; color: var(--gold);
+      opacity: 0.15; line-height: 1; margin-bottom: 24px;
+    }
+    .about-visual-tag {
+      font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 8px;
+    }
+    .about-visual-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px; font-style: italic; color: var(--text);
+    }
+    .about-visual::before { content: none; }
+    .about-placeholder-label {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: monospace; font-size: 11px;
+      color: rgba(255,255,255,0.2); text-align: center; letter-spacing: 0.05em;
+      white-space: nowrap;
+    }
+    .about-content .section-title { margin-bottom: 28px; }
+    .about-mission {
+      font-size: 15px; color: var(--text-muted); line-height: 1.85;
+      margin-bottom: 40px;
+    }
+    .about-mission strong { color: var(--text); font-weight: 600; }
+    .about-values { display: flex; flex-direction: column; gap: 1px; }
+    .about-value {
+      display: flex; gap: 24px; align-items: flex-start;
+      padding: 24px 0; border-bottom: 1px solid var(--border);
+    }
+    .about-value-num {
+      font-family: 'Cormorant Garamond', serif; font-size: 48px;
+      font-weight: 700; color: var(--gold); line-height: 1;
+      min-width: 52px; opacity: 0.7;
+    }
+    .about-value-title { font-size: 18px; font-weight: 600; margin-bottom: 4px; }
+    .about-value-desc { font-size: 14px; color: var(--text-muted); }
+
+    /* ── SERVICES ── */
+    #services {}
+    .services-header { max-width: 640px; margin-bottom: 64px; }
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+    .service-card {
+      background: var(--bg-section);
+      padding: 48px 40px; position: relative; overflow: hidden;
+      transition: background 0.3s;
+      cursor: default;
+    }
+    .service-card:hover { background: var(--bg-dark); }
+    .service-card:hover .service-title,
+    .service-card:hover .service-body,
+    .service-card:hover .service-price-label { color: rgba(255,255,255,0.9); }
+    .service-card:hover .service-price { color: var(--gold); }
+    .service-card:hover .service-tag { color: rgba(255,255,255,0.4); border-color: rgba(255,255,255,0.1); }
+    .service-card:hover .service-features li { color: rgba(255,255,255,0.6); }
+    .service-card:hover .service-features li::before { color: var(--gold); }
+    .service-card:hover .service-cta { color: var(--gold); }
+    .service-num {
+      font-family: 'Cormorant Garamond', serif; font-size: 72px;
+      font-weight: 700; line-height: 1; color: var(--gold);
+      opacity: 0.12; position: absolute; top: 24px; right: 32px;
+    }
+    .service-tag {
+      display: inline-block; font-size: 10px; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--text-muted);
+      border: 1px solid var(--border); padding: 4px 10px; border-radius: 2px;
+      margin-bottom: 28px; transition: all 0.3s;
+    }
+    .service-title {
+      font-size: 28px; font-weight: 600; margin-bottom: 16px;
+      transition: color 0.3s;
+    }
+    .service-body {
+      font-size: 14px; color: var(--text-muted); line-height: 1.75;
+      margin-bottom: 28px; transition: color 0.3s;
+    }
+    .service-features { list-style: none; margin-bottom: 36px; }
+    .service-features li {
+      font-size: 13px; color: var(--text-muted); padding: 6px 0;
+      padding-left: 20px; position: relative; transition: color 0.3s;
+    }
+    .service-features li::before {
+      content: '—'; position: absolute; left: 0;
+      color: var(--gold); font-weight: 600; transition: color 0.3s;
+    }
+    .service-price-label { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px; transition: color 0.3s; }
+    .service-price { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 700; color: var(--text); margin-bottom: 28px; transition: color 0.3s; }
+    .service-cta {
+      font-size: 13px; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--text-muted);
+      text-decoration: none; display: flex; align-items: center; gap: 8px;
+      transition: color 0.3s;
+    }
+    .service-cta::after { content: '→'; }
+
+    /* ── WHY US ── */
+    #why { background: var(--bg-dark); padding: 100px 80px; }
+    #why .section-eyebrow { color: var(--gold); }
+    #why .section-eyebrow::before { background: var(--gold); }
+    #why .section-title { color: var(--white); }
+    #why .section-lead { color: rgba(255,255,255,0.5); }
+    .why-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 2px; margin-top: 64px; }
+    .why-card {
+      background: rgba(255,255,255,0.03); padding: 36px 28px;
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 2px;
+    }
+    .why-icon { width: 40px; height: 40px; margin-bottom: 24px; }
+    .why-icon-line { stroke: var(--gold); fill: none; stroke-width: 1.5; stroke-linecap: round; }
+    .why-card-title { font-size: 16px; font-weight: 600; color: var(--white); margin-bottom: 10px; }
+    .why-card-desc { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.7; }
+
+    /* ── TESTIMONIALS ── */
+    #testimonials { background: var(--bg-section); }
+    .testimonials-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 56px; }
+    .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .testimonial-card {
+      background: var(--white); padding: 40px 36px;
+      border: 1px solid var(--border); border-radius: 2px;
+    }
+    .testimonial-stars { color: var(--gold); font-size: 14px; letter-spacing: 2px; margin-bottom: 20px; }
+    .testimonial-text {
+      font-family: 'Cormorant Garamond', serif; font-size: 22px;
+      line-height: 1.45; color: var(--text); margin-bottom: 28px;
+      font-style: italic;
+    }
+    .testimonial-author { display: flex; align-items: center; gap: 14px; }
+    .testimonial-avatar {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: var(--gold-light); display: flex; align-items: center;
+      justify-content: center; font-family: 'Cormorant Garamond', serif;
+      font-size: 18px; font-weight: 700; color: var(--gold-dark);
+    }
+    .testimonial-name { font-size: 14px; font-weight: 600; color: var(--text); }
+    .testimonial-role { font-size: 12px; color: var(--text-muted); }
+
+    /* ── FAQ ── */
+    #faq {}
+    .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; }
+    .faq-list { display: flex; flex-direction: column; }
+    .faq-item { border-bottom: 1px solid var(--border); }
+    .faq-question {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 24px 0; cursor: pointer;
+      font-size: 16px; font-weight: 500; color: var(--text);
+      transition: color 0.2s;
+    }
+    .faq-question:hover { color: var(--gold-dark); }
+    .faq-question-icon {
+      width: 24px; height: 24px; border-radius: 50%;
+      border: 1px solid var(--border); display: flex; align-items: center;
+      justify-content: center; flex-shrink: 0;
+      font-size: 16px; color: var(--text-muted); transition: all 0.3s;
+    }
+    .faq-item.open .faq-question-icon { background: var(--text); color: var(--white); border-color: var(--text); transform: rotate(45deg); }
+    .faq-answer {
+      font-size: 14px; color: var(--text-muted); line-height: 1.8;
+      max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.3s;
+    }
+    .faq-item.open .faq-answer { max-height: 300px; padding-bottom: 24px; }
+    .faq-contact-box {
+      background: var(--bg-dark); padding: 48px; border-radius: 2px;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .faq-contact-box .section-title { color: var(--white); margin-bottom: 16px; }
+    .faq-contact-desc { font-size: 15px; color: rgba(255,255,255,0.5); margin-bottom: 36px; line-height: 1.7; }
+    .faq-contact-link {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--gold); color: var(--text); font-size: 14px;
+      font-weight: 700; padding: 16px 32px; border-radius: 4px;
+      text-decoration: none; letter-spacing: 0.04em;
+      transition: all 0.2s; align-self: flex-start;
+    }
+    .faq-contact-link:hover { background: var(--gold-dark); color: var(--white); transform: translateY(-2px); }
+    .faq-contact-info { margin-top: 36px; display: flex; flex-direction: column; gap: 12px; }
+    .faq-contact-row { display: flex; align-items: center; gap: 12px; font-size: 13px; color: rgba(255,255,255,0.4); }
+
+    /* ── BLOG ── */
+    #blog { background: var(--bg-section); }
+    .blog-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 56px; }
+    .blog-see-all {
+      font-size: 13px; font-weight: 600; letter-spacing: 0.06em;
+      text-transform: uppercase; color: var(--text-muted);
+      text-decoration: none; display: flex; align-items: center; gap: 8px;
+      transition: color 0.2s;
+    }
+    .blog-see-all:hover { color: var(--gold-dark); }
+    .blog-see-all::after { content: '→'; }
+    .blog-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 2px; }
+    .blog-card { background: var(--white); overflow: hidden; }
+    .blog-card:hover .blog-card-title { color: var(--gold-dark); }
+    .blog-image {
+      aspect-ratio: 16/10; background: var(--bg-dark);
+      position: relative; overflow: hidden;
+    }
+    .blog-image::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        135deg,
+        transparent, transparent 16px,
+        rgba(255,255,255,0.02) 16px, rgba(255,255,255,0.02) 32px
+      );
+    }
+    .blog-image-label {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: monospace; font-size: 10px;
+      color: rgba(255,255,255,0.2); text-align: center;
+      white-space: nowrap;
+    }
+    .blog-card-body { padding: 28px 28px 32px; }
+    .blog-card:first-child .blog-card-body { padding: 36px 40px 40px; }
+    .blog-category {
+      font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--gold-dark); font-weight: 600; margin-bottom: 12px;
+    }
+    .blog-card-title {
+      font-size: 20px; font-weight: 600; color: var(--text);
+      line-height: 1.35; margin-bottom: 12px; transition: color 0.2s;
+    }
+    .blog-card:first-child .blog-card-title { font-size: 28px; }
+    .blog-excerpt { font-size: 13px; color: var(--text-muted); line-height: 1.7; }
+    .blog-card:last-child .blog-excerpt, .blog-card:nth-child(3) .blog-excerpt { display: none; }
+    .blog-meta { margin-top: 20px; font-size: 12px; color: var(--text-muted); display: flex; gap: 16px; }
+
+    /* ── PARTNERS ── */
+    #partners {}
+    .partners-top { display: grid; grid-template-columns: 1fr 2fr; gap: 80px; align-items: start; margin-bottom: 56px; }
+    .partners-brand-row {
+      display: grid; grid-template-columns: repeat(6, 1fr);
+      gap: 2px; margin-bottom: 2px;
+    }
+    .partner-logo-item {
+      aspect-ratio: 2/1;
+      background: var(--bg-section);
+      display: flex; align-items: center; justify-content: center;
+      padding: 16px 12px;
+      transition: background 0.2s;
+      overflow: hidden;
+    }
+    .partner-logo-item img {
+      max-width: 100%; max-height: 56px;
+      object-fit: contain; filter: grayscale(100%);
+      transition: filter 0.3s;
+    }
+    .partner-logo-item:hover { background: var(--gold-light); }
+    .partner-logo-item:hover img { filter: grayscale(0%); }
+    .partner-logo-text {
+      font-family: 'Cormorant Garamond', serif; font-size: 18px;
+      font-weight: 700; color: var(--text); letter-spacing: 0.05em;
+      text-align: center; transition: color 0.2s; line-height: 1.3;
+    }
+    .partner-logo-item:hover .partner-logo-text { color: var(--gold-dark); }
+
+    /* KOL grid */
+    .partners-kol-title {
+      font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 20px; margin-top: 40px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .partners-kol-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    .partners-kol-grid {
+      display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px;
+    }
+    .kol-card {
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      text-align: center;
+    }
+    .kol-avatar {
+      width: 80px; height: 80px; border-radius: 50%;
+      object-fit: cover; object-position: top;
+      filter: grayscale(30%); transition: filter 0.3s, transform 0.3s;
+      border: 2px solid var(--border);
+    }
+    .kol-card:hover .kol-avatar { filter: grayscale(0%); transform: scale(1.05); }
+    .kol-name { font-size: 13px; font-weight: 600; color: var(--text); }
+    .kol-role { font-size: 11px; color: var(--text-muted); line-height: 1.4; }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--bg-dark); padding: 100px 80px; }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; }
+    #contact .section-eyebrow { color: var(--gold); }
+    #contact .section-eyebrow::before { background: var(--gold); }
+    #contact .section-title { color: var(--white); }
+    #contact .section-lead { color: rgba(255,255,255,0.5); max-width: 440px; }
+    .contact-info { margin-top: 48px; display: flex; flex-direction: column; gap: 20px; }
+    .contact-info-row { display: flex; gap: 16px; align-items: flex-start; }
+    .contact-info-icon { color: var(--gold); font-size: 16px; margin-top: 2px; min-width: 20px; }
+    .contact-info-label { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 4px; }
+    .contact-info-value { font-size: 15px; color: rgba(255,255,255,0.75); font-weight: 500; }
+    .contact-form { display: flex; flex-direction: column; gap: 16px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-label { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+    .form-input, .form-textarea {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 4px; padding: 14px 16px;
+      font-size: 14px; color: var(--white);
+      font-family: 'Be Vietnam Pro', sans-serif;
+      transition: border-color 0.2s;
+      outline: none; width: 100%;
+    }
+    .form-input::placeholder, .form-textarea::placeholder { color: rgba(255,255,255,0.25); }
+    .form-input:focus, .form-textarea:focus { border-color: var(--gold); }
+    .form-textarea { resize: vertical; min-height: 120px; }
+    .form-check { display: flex; align-items: flex-start; gap: 10px; }
+    .form-check input { margin-top: 3px; accent-color: var(--gold); }
+    .form-check label { font-size: 12px; color: rgba(255,255,255,0.4); line-height: 1.5; }
+    .form-submit {
+      background: var(--gold); color: var(--text); font-size: 14px;
+      font-weight: 700; padding: 16px 36px; border: none; border-radius: 4px;
+      cursor: pointer; font-family: 'Be Vietnam Pro', sans-serif;
+      letter-spacing: 0.04em; transition: all 0.2s; align-self: flex-start;
+    }
+    .form-submit:hover { background: var(--gold-dark); color: var(--white); transform: translateY(-2px); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: oklch(14% 0.018 255);
+      padding: 48px 80px; border-top: 1px solid rgba(255,255,255,0.06);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .footer-left { display: flex; align-items: center; gap: 16px; }
+    .footer-logo img { width: 28px; height: 28px; border-radius: 6px; }
+    .footer-brand { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 700; color: var(--white); }
+    .footer-tagline { font-size: 12px; color: rgba(255,255,255,0.3); margin-top: 2px; }
+    .footer-links { display: flex; gap: 32px; }
+    .footer-links a { font-size: 13px; color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--gold); }
+    .footer-copy { font-size: 12px; color: rgba(255,255,255,0.25); }
+
+    /* ── ANIMATIONS ── */
+    .reveal {
+      opacity: 0; transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    @media (max-width: 1100px) {
+      #hero { grid-template-columns: 1fr; }
+      .hero-right { display: none; }
+      .about-grid, .faq-grid, .contact-grid { grid-template-columns: 1fr; }
+      .services-grid { grid-template-columns: 1fr; }
+      .why-grid { grid-template-columns: repeat(2, 1fr); }
+      .blog-grid, .partners-logos { grid-template-columns: repeat(2, 1fr); }
+      .partners-top { grid-template-columns: 1fr; }
+      nav { padding: 0 24px; }
+      .nav-links { display: none; }
+      section, #why, #contact { padding: 72px 28px; }
+      footer { flex-direction: column; gap: 28px; text-align: center; padding: 40px 28px; }
+      .footer-links { flex-wrap: wrap; justify-content: center; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <a class="nav-logo" href="#">
+    <img src="logo.png" alt="Sellator logo">
+    <span class="nav-logo-text">Sellator</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">Về chúng tôi</a></li>
+    <li><a href="#services">Dịch vụ</a></li>
+    <li><a href="#testimonials">Đối tác</a></li>
+    <li><a href="#blog">Kiến thức</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <a class="nav-cta" href="#contact">Đặt lịch tư vấn</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Quân Sư Chiến Lược</div>
+    <h1 class="hero-title">
+      Đồng hành<br>như một<br><em>thành viên trong Hội đồng quản trị</em>
+    </h1>
+    <p class="hero-subtitle">
+      Sellator không chỉ là 1 đơn vị tư vấn. Chúng tôi là quân sư chiến lược ngồi cùng bạn trong mọi quyết định quan trọng, từ truyền thông tiếp thị đến thương hiệu, trí tuệ nhân tạo và tăng trưởng bền vững.
+    </p>
+    <div class="hero-actions">
+      <a class="btn-primary" href="#contact">Đặt lịch tư vấn</a>
+      <a class="btn-ghost" href="#services">Xem dịch vụ</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <span class="hero-stat-num">13+</span>
+        <div class="hero-stat-label">Năm kinh nghiệm thực chiến</div>
+      </div>
+      <div>
+        <span class="hero-stat-num">20+</span>
+        <div class="hero-stat-label">Doanh nghiệp đã đồng hành</div>
+      </div>
+      <div>
+        <span class="hero-stat-num">3</span>
+        <div class="hero-stat-label">Lĩnh vực tư vấn chuyên sâu</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-right-inner">
+      <div class="hero-quote-card">
+        <div class="hero-quote-text">"You win, then Us"<br>Bạn thắng trước, rồi đến chúng ta.</div>
+        <div class="hero-quote-source">TRIẾT LÝ SELLATOR LUÔN THEO ĐUỔI</div>
+      </div>
+      <div class="hero-value-list">
+        <div class="hero-value-item">
+          <div class="hero-value-icon">Tâm</div>
+          <div>
+            <div class="hero-value-name">Tâm — Hết lòng</div>
+            <div class="hero-value-desc">Đặt lợi ích của đối tác lên trên, việc của đối tác là việc của mình</div>
+          </div>
+        </div>
+        <div class="hero-value-item">
+          <div class="hero-value-icon">Tài</div>
+          <div>
+            <div class="hero-value-name">Tài — Năng lực</div>
+            <div class="hero-value-desc">Không ngừng nâng cao năng lực và mang đến kết quả tốt hơn mỗi ngày</div>
+          </div>
+        </div>
+        <div class="hero-value-item">
+          <div class="hero-value-icon">Tin</div>
+          <div>
+            <div class="hero-value-name">Tin — Tin cậy</div>
+            <div class="hero-value-desc">Nỗ lực từng ngày để đối tác tiếp tục trao gửi niềm tin</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-right-deco"></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-visual reveal">
+      <img src="team.png" alt="Hạ Hồng Việt - Founder Sellator" style="width:100%; height:100%; object-fit:cover; object-position: top center; display:block;">
+      <div class="about-visual-inner">
+        <div class="about-visual-tag">Sellator · Since 2023</div>
+        <div class="about-visual-title">"you win, then us"</div>
+      </div>
+    </div>
+    <div class="about-content">
+      <div class="section-eyebrow reveal">Về Sellator</div>
+      <h2 class="section-title reveal reveal-delay-1">Tầm nhìn hướng đến<br>tương lai kết nối</h2>
+      <p class="about-mission reveal reveal-delay-2">
+        Chúng tôi nhìn thấy tương lai thế giới sẽ được kết nối mạnh mẽ, nơi <strong>công nghệ và truyền thông</strong> sẽ kết hợp cùng nhau và thay đổi thế giới.<br><br>
+        Tầm nhìn của chúng tôi là nắm bắt, thấu hiểu, trở thành một phần của thế giới ấy — cùng đồng hành với các doanh nghiệp trong ngành tăng trưởng một cách <strong>bền vững và thực chất</strong>.
+      </p>
+      <div class="about-values">
+        <div class="about-value reveal reveal-delay-2">
+          <div class="about-value-num">01</div>
+          <div>
+            <div class="about-value-title">Kinh nghiệm thực chiến</div>
+            <div class="about-value-desc">Đội ngũ tư vấn dựa hoàn toàn trên thực tế, không sách vở lý thuyết</div>
+          </div>
+        </div>
+        <div class="about-value reveal reveal-delay-3">
+          <div class="about-value-num">02</div>
+          <div>
+            <div class="about-value-title">Hướng đến hợp tác dài hạn</div>
+            <div class="about-value-desc">Lợi ích của đối tác luôn được đặt lên trên, không tư vấn một lần bỏ</div>
+          </div>
+        </div>
+        <div class="about-value reveal reveal-delay-4">
+          <div class="about-value-num">03</div>
+          <div>
+            <div class="about-value-title">Đáng tin cậy &amp; bảo mật</div>
+            <div class="about-value-desc">Mọi thông tin đối tác được bảo mật tuyệt đối, không chia sẻ ra ngoài</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="services-header">
+    <div class="section-eyebrow reveal">Dịch vụ</div>
+    <h2 class="section-title reveal reveal-delay-1">Ba trụ cột<br>đồng hành doanh nghiệp</h2>
+    <p class="section-lead reveal reveal-delay-2">Mỗi dịch vụ được thiết kế để giải quyết một vấn đề cụ thể, đưa ra phương án triển khai ngắn hạn đồng thời hướng đến tầm nhìn dài hạn.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <div class="service-num">1</div>
+      <div class="service-tag">Thương hiệu &amp; Truyền thông</div>
+      <h3 class="service-title">Cố vấn<br>Chiến lược Doanh nghiệp</h3>
+      <p class="service-body">Đồng hành cùng chủ doanh nghiệp. Khai thác nguồn lực, định hướng, tối ưu. Giải quyết những vấn đề khó nhất của tổ chức.</p>
+      <ul class="service-features">
+        <li>Định vị thương hiệu &amp; truyền thông</li>
+        <li>Xây dựng chiến lược tăng trưởng</li>
+        <li>Quản trị rủi ro dài hạn</li>
+        <li>Đồng hành hàng tháng, linh hoạt</li>
+      </ul>
+      <div class="service-price-label">Chi phí từ</div>
+      <div class="service-price">30.000.000đ / tháng</div>
+      <a class="service-cta" href="#contact">Đặt lịch tư vấn</a>
+    </div>
+    <div class="service-card reveal reveal-delay-1">
+      <div class="service-num">2</div>
+      <div class="service-tag">E-commerce &amp; Shoppertainment</div>
+      <h3 class="service-title">Tư vấn<br>Truyền thông</h3>
+      <p class="service-body">Hiểu cuộc chơi, hiểu luật chơi, hiểu rõ người tham gia — từ đó đưa ra chiến lược rõ ràng, thiết thực và có thể đo lường được.</p>
+      <ul class="service-features">
+        <li>Chiến lược marketing &amp; truyền thông</li>
+        <li>Content &amp; Conversion tối ưu</li>
+        <li>Shoppertainment &amp; Livestream</li>
+        <li>Tư vấn theo giờ, linh hoạt</li>
+      </ul>
+      <div class="service-price-label">Chi phí từ</div>
+      <div class="service-price">6.800.000đ / giờ</div>
+      <a class="service-cta" href="#contact">Đặt lịch tư vấn</a>
+    </div>
+    <div class="service-card reveal reveal-delay-2">
+      <div class="service-num">3</div>
+      <div class="service-tag">Phát triển cá nhân</div>
+      <h3 class="service-title">Cố vấn<br>Cá nhân</h3>
+      <p class="service-body">Phù hợp đối với chủ doanh nghiệp xây thương hiệu cá nhân. Đồng hành trọn đời, cùng xây dựng nền tảng tư duy, uy tín và năng lực cá nhân vững chắc.</p>
+      <ul class="service-features">
+        <li>Tư duy kinh doanh &amp; tâm lý học</li>
+        <li>Phát triển tài năng cá nhân</li>
+        <li>Xây dựng uy tín &amp; thuyết phục</li>
+        <li>Lý thuyết trò chơi dài hạn</li>
+      </ul>
+      <div class="service-price-label">Chi phí từ</div>
+      <div class="service-price">10.000.000đ / tháng</div>
+      <a class="service-cta" href="#contact">Đặt lịch tư vấn</a>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section id="why">
+  <div class="section-eyebrow reveal">Tại sao chọn Sellator</div>
+  <h2 class="section-title reveal reveal-delay-1">Không phải nhà cung cấp dịch vụ —<br>chúng tôi là <em style="font-style:italic; color:var(--gold)">quân sư</em> của bạn</h2>
+  <p class="section-lead reveal reveal-delay-2">Khác biệt nằm ở cách tiếp cận: chúng tôi ngồi cùng bàn, nhìn vào bài toán của bạn, và cùng giải quyết như một thành viên trong Hội đồng quản trị.</p>
+  <div class="why-grid">
+    <div class="why-card reveal reveal-delay-1">
+      <svg class="why-icon" viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" class="why-icon-line"/><path d="M14 20l4 4 8-8" class="why-icon-line"/></svg>
+      <div class="why-card-title">Thực chiến, không lý thuyết</div>
+      <div class="why-card-desc">Mọi lời tư vấn đến từ kinh nghiệm thực tế, không copy sách giáo khoa</div>
+    </div>
+    <div class="why-card reveal reveal-delay-2">
+      <svg class="why-icon" viewBox="0 0 40 40"><path d="M8 20c0-6.627 5.373-12 12-12s12 5.373 12 12" class="why-icon-line"/><path d="M14 28l6-8 6 8" class="why-icon-line"/></svg>
+      <div class="why-card-title">Lợi ích đối tác trước tiên</div>
+      <div class="why-card-desc">Chúng tôi chỉ thành công khi đối tác thành công — "you win, then us"</div>
+    </div>
+    <div class="why-card reveal reveal-delay-3">
+      <svg class="why-icon" viewBox="0 0 40 40"><rect x="10" y="10" width="20" height="20" rx="3" class="why-icon-line"/><path d="M15 20h10M20 15v10" class="why-icon-line"/></svg>
+      <div class="why-card-title">Tầm nhìn tổng thể</div>
+      <div class="why-card-desc">Kiến thức và kinh nghiệm bao quát: thương hiệu, marketing, bán hàng, vận hành</div>
+    </div>
+    <div class="why-card reveal reveal-delay-2">
+      <svg class="why-icon" viewBox="0 0 40 40"><path d="M20 8v8M20 24v8M8 20h8M24 20h8" class="why-icon-line"/><circle cx="20" cy="20" r="4" class="why-icon-line"/></svg>
+      <div class="why-card-title">Đáng tin cậy &amp; bảo mật</div>
+      <div class="why-card-desc">Thông tin đối tác được bảo mật tuyệt đối, không chia sẻ với bên thứ ba</div>
+    </div>
+    <div class="why-card reveal reveal-delay-3">
+      <svg class="why-icon" viewBox="0 0 40 40"><path d="M12 28l4-8 4 4 4-8 4 12" class="why-icon-line"/></svg>
+      <div class="why-card-title">Thích nghi linh hoạt</div>
+      <div class="why-card-desc">Đội ngũ trẻ, nhạy bén, ứng biến nhanh với từng hoàn cảnh cụ thể của doanh nghiệp</div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="testimonials-header">
+    <div>
+      <div class="section-eyebrow reveal">Đối tác nói gì</div>
+      <h2 class="section-title reveal reveal-delay-1">Tiếng nói từ thực tế</h2>
+    </div>
+  </div>
+  <div class="testimonials-grid" style="grid-template-columns: repeat(2,1fr); gap: 24px;">
+    <div class="testimonial-card reveal" style="grid-column: span 2;">
+      <div class="testimonial-stars">★★★★★</div>
+      <div class="testimonial-text">"Anh Hạ Hồng Việt là người tư vấn rất thực tế, nói thẳng và nói thật, không vòng vo hay tô hồng vấn đề. Anh có khả năng phân tích và lập luận có hệ thống, giúp mình nhìn rõ lại những gì mình đang có, từ đó gợi ý nhiều ý tưởng phù hợp để khai thác và phát triển thương hiệu một cách bài bản hơn."</div>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">Đ</div>
+        <div>
+          <div class="testimonial-name">Đàm Đức</div>
+          <div class="testimonial-role">Creator · 5 triệu follower đa nền tảng</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card reveal reveal-delay-1">
+      <div class="testimonial-stars">★★★★★</div>
+      <div class="testimonial-text">"Keyword lớn nhất bật ra trong đầu em là <strong>trách nhiệm</strong>, tiếp theo là <strong>ổn định</strong> và cuối cùng mới đến chuyên môn. Anh luôn bình tĩnh trong mọi hoàn cảnh để đưa ra những tư vấn sáng suốt và tỉnh táo nhất — đó mới là phẩm chất tốt nhất của người làm truyền thông."</div>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">P</div>
+        <div>
+          <div class="testimonial-name">Phạm Củ</div>
+          <div class="testimonial-role">KOL · Creator TikTok 300K follower</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card reveal reveal-delay-2">
+      <div class="testimonial-stars">★★★★★</div>
+      <div class="testimonial-text">"Đi từ kiến thức gốc rễ, giải thích được các case study thành công vì sao và đúc rút ra công thức chung. Nhiệt tình ngay cả khi chưa ký hợp đồng — có thể đêm hôm vẫn hỗ trợ rất nhanh như làm việc inhouse."</div>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">T</div>
+        <div>
+          <div class="testimonial-name">Tuấn Nguyễn Lily</div>
+          <div class="testimonial-role">Co-Founder · Lily Eyewear</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card reveal reveal-delay-1" style="grid-column: span 2;">
+      <div class="testimonial-stars">★★★★★</div>
+      <div class="testimonial-text">"Sau 2 năm đồng hành, mình nhận ra rất nhiều vấn đề — những gì người trong cuộc nghĩ chưa chắc đã đúng. Hãy để một chuyên gia bên ngoài nhìn nhận, tư vấn, nhận xét — đó là giá trị rất lớn. Bản thân tôi cảm thấy rất xứng đáng. Một kinh nghiệm: nên booking sớm, càng để lâu càng lên giá."</div>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">Ô</div>
+        <div>
+          <div class="testimonial-name">Ông Giáo Review</div>
+          <div class="testimonial-role">Creator · 3 triệu follower đa nền tảng</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="faq-grid">
+    <div>
+      <div class="section-eyebrow reveal">FAQ</div>
+      <h2 class="section-title reveal reveal-delay-1">Câu hỏi<br>thường gặp</h2>
+      <div class="faq-list" style="margin-top: 40px;">
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            Sellator phù hợp với loại doanh nghiệp nào?
+            <span class="faq-question-icon">+</span>
+          </div>
+          <div class="faq-answer">Sellator phù hợp nhất với các doanh nghiệp vừa và nhỏ, startup đang tăng trưởng, hoặc các chủ doanh nghiệp cần một người đồng hành chiến lược dài hạn trong lĩnh vực marketing, truyền thông và e-commerce.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            Buổi tư vấn diễn ra như thế nào?
+            <span class="faq-question-icon">+</span>
+          </div>
+          <div class="faq-answer">Hoạt động tư vấn được tổ chức theo giờ, đặt lịch trước và trả lời thông tin cần thiết trước buổi tư vấn để đảm bảo hiệu quả cao nhất. Có thể gặp trực tiếp hoặc online.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            Tôi cần chuẩn bị gì trước khi tư vấn?
+            <span class="faq-question-icon">+</span>
+          </div>
+          <div class="faq-answer">Bạn nên chuẩn bị mô tả ngắn về doanh nghiệp, vấn đề cần giải quyết, và mục tiêu muốn đạt được. Sellator sẽ gửi bảng câu hỏi chuẩn bị trước buổi tư vấn.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            Có cam kết kết quả không?
+            <span class="faq-question-icon">+</span>
+          </div>
+          <div class="faq-answer">Chúng tôi không đảm bảo kết quả cụ thể vì kết quả phụ thuộc vào nhiều yếu tố, nhưng cam kết đồng hành hết mình và điều chỉnh chiến lược linh hoạt cho đến khi đạt mục tiêu.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            Thông tin của tôi có được bảo mật không?
+            <span class="faq-question-icon">+</span>
+          </div>
+          <div class="faq-answer">Tuyệt đối có. Toàn bộ thông tin đối tác được bảo mật và chỉ phục vụ mục đích tư vấn. Chúng tôi ký NDA theo yêu cầu của đối tác.</div>
+        </div>
+      </div>
+    </div>
+    <div class="faq-contact-box reveal">
+      <div class="section-eyebrow" style="color: var(--gold);">Bắt đầu ngay</div>
+      <h3 class="section-title" style="color: var(--white); font-size: 36px; margin-bottom: 16px;">Còn thắc mắc?<br>Hãy nói chuyện trực tiếp</h3>
+      <p class="faq-contact-desc">Đặt lịch một buổi tư vấn miễn phí 30 phút để chúng tôi hiểu rõ hơn về doanh nghiệp của bạn trước khi đề xuất giải pháp phù hợp.</p>
+      <a class="faq-contact-link" href="http://zalo.me/0962184224" target="_blank">Liên hệ qua Zalo</a>
+      <div class="faq-contact-info">
+        <div class="faq-contact-row">
+          <span class="contact-info-icon">✆</span>
+          <div>
+            <div class="contact-info-label">Hotline</div>
+            <div class="contact-info-value">037 686 0111</div>
+          </div>
+        </div>
+        <div class="faq-contact-row">
+          <span class="contact-info-icon">✉</span>
+          <div>
+            <div class="contact-info-label">Email</div>
+            <div class="contact-info-value">viet@sellator.net</div>
+          </div>
+        </div>
+        <div class="faq-contact-row">
+          <span class="contact-info-icon">◎</span>
+          <div>
+            <div class="contact-info-label">Địa chỉ</div>
+            <div class="contact-info-value">58 TT5, KĐT VOV Mễ Trì, Nam Từ Liêm, Hà Nội</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOG CTA -->
+<section id="blog" style="background: var(--bg-section);">
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center;">
+    <div>
+      <div class="section-eyebrow reveal">Kiến thức</div>
+      <h2 class="section-title reveal reveal-delay-1">Góc nhìn từ<br>người trong cuộc</h2>
+      <p class="section-lead reveal reveal-delay-2" style="margin-top: 20px; font-size: 15px;">Những bài viết chuyên sâu về chiến lược marketing, thương hiệu, shoppertainment và tư duy kinh doanh — được viết bởi người đã trực tiếp làm, không phải lý thuyết sách vở.</p>
+    </div>
+    <div class="reveal reveal-delay-2" style="display: flex; flex-direction: column; gap: 20px;">
+      <div style="font-size: 15px; color: var(--text-muted); line-height: 1.8;">Truy cập blog cá nhân của <strong style="color: var(--text);">Hạ Hồng Việt</strong> - Founder Sellator để đọc những phân tích và góc nhìn thực chiến nhất về ngành.</div>
+      <a href="https://hahongviet.com" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 12px; background: var(--text); color: var(--white); padding: 16px 32px; border-radius: 4px; font-size: 14px; font-weight: 600; letter-spacing: 0.04em; text-decoration: none; transition: background 0.2s; align-self: flex-start;" onmouseover="this.style.background='var(--gold-dark)'" onmouseout="this.style.background='var(--text)'">
+        Đọc blog tại hahongviet.com <span style="font-size: 16px;">↗</span>
+      </a>
+      <div style="font-size: 12px; color: var(--text-muted); display: flex; gap: 20px; flex-wrap: wrap;">
+        <span>✦ Chiến lược truyền thông</span>
+        <span>✦ Quy trình AI</span>
+        <span>✦ Thương hiệu bền vững</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PARTNERS -->
+<section id="partners">
+  <div class="partners-top">
+    <div>
+      <div class="section-eyebrow reveal">Đối tác</div>
+      <h2 class="section-title reveal reveal-delay-1">Những tên tuổi<br>đã đồng hành</h2>
+      <p class="section-lead reveal reveal-delay-2" style="margin-top: 20px; font-size: 15px;">Sellator đã đồng hành cùng các thương hiệu, doanh nghiệp và cá nhân thuộc nhiều ngành hàng khác nhau.</p>
+    </div>
+  </div>
+  <!-- Brand logos -->
+  <div class="partners-brand-row reveal">
+    <div class="partner-logo-item">
+      <img src="partners/acbt.jpeg" alt="Ăn Cùng Bà Tuyết">
+    </div>
+    <div class="partner-logo-item">
+      <img src="partners/saffron.png" alt="Saffron Việt Nam">
+    </div>
+    <div class="partner-logo-item">
+      <img src="partners/aikomi.webp" alt="Aikomi">
+    </div>
+    <div class="partner-logo-item">
+      <img src="partners/ximo.webp" alt="XIMO">
+    </div>
+    <div class="partner-logo-item">
+      <img src="partners/lily.png" alt="Lily Eyewear">
+    </div>
+    <div class="partner-logo-item">
+      <img src="partners/cheng.png" alt="Cheng Love Hair">
+    </div>
+  </div>
+  <!-- KOLs / Cá nhân -->
+  <div class="partners-kol-title reveal">Creator &amp; Cá nhân tiêu biểu</div>
+  <div class="partners-kol-grid reveal">
+    <div class="kol-card">
+      <img class="kol-avatar" src="partners/person2.jpg" alt="Đàm Đức Review">
+      <div class="kol-name">Đàm Đức Review</div>
+      <div class="kol-role">KOC</div>
+    </div>
+    <div class="kol-card">
+      <img class="kol-avatar" src="partners/ong-giao.jpg" alt="Ngọc Khánh Đây">
+      <div class="kol-name">Ngọc Khánh Đây</div>
+      <div class="kol-role">KOL/KOC</div>
+    </div>
+    <div class="kol-card">
+      <img class="kol-avatar" src="partners/person4.jpg" alt="Chú Cá Review">
+      <div class="kol-name">Chú Cá Review</div>
+      <div class="kol-role">KOC</div>
+    </div>
+    <div class="kol-card">
+      <img class="kol-avatar" src="partners/khanh-an.jpg" alt="Khánh LifeTech">
+      <div class="kol-name">Khánh LifeTech</div>
+      <div class="kol-role">KOL</div>
+    </div>
+    <div class="kol-card">
+      <img class="kol-avatar" src="partners/person5.jpg" alt="Hứa Ngân">
+      <div class="kol-name">Hứa Ngân</div>
+      <div class="kol-role">KOC</div>
+    </div>
+    <div class="kol-card">
+      <img class="kol-avatar" src="partners/person3.jpg" alt="Ông Giáo Review">
+      <div class="kol-name">Ông Giáo Review</div>
+      <div class="kol-role">KOC</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-grid">
+    <div>
+      <div class="section-eyebrow">Liên hệ</div>
+      <h2 class="section-title">Sẵn sàng để<br>bắt đầu hành trình?</h2>
+      <p class="section-lead" style="margin-top: 20px;">Điền thông tin để được tư vấn chi tiết và cá nhân hóa. Mọi thông tin đều được bảo mật tuyệt đối.</p>
+      <div class="contact-info">
+        <div class="contact-info-row">
+          <span class="contact-info-icon">✆</span>
+          <div>
+            <div class="contact-info-label">Hotline / Zalo</div>
+            <div class="contact-info-value">037 686 0111</div>
+          </div>
+        </div>
+        <div class="contact-info-row">
+          <span class="contact-info-icon">✉</span>
+          <div>
+            <div class="contact-info-label">Email</div>
+            <div class="contact-info-value">viet@sellator.net</div>
+          </div>
+        </div>
+        <div class="contact-info-row">
+          <span class="contact-info-icon">◎</span>
+          <div>
+            <div class="contact-info-label">Văn phòng</div>
+            <div class="contact-info-value">58 TT5, KĐT VOV Mễ Trì,<br>Nam Từ Liêm, Hà Nội</div>
+          </div>
+        </div>
+        <div class="contact-info-row">
+          <span class="contact-info-icon">⌛</span>
+          <div>
+            <div class="contact-info-label">Giờ làm việc</div>
+            <div class="contact-info-value">Thứ 2 – Thứ 7, 8:00 – 18:00</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <form class="contact-form" onsubmit="submitForm(event)">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Họ và tên *</label>
+          <input class="form-input" type="text" placeholder="Nguyễn Văn A" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Số điện thoại *</label>
+          <input class="form-input" type="tel" placeholder="0912 345 678" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input class="form-input" type="email" placeholder="email@doanhnghiep.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Doanh nghiệp / Lĩnh vực</label>
+        <input class="form-input" type="text" placeholder="Công ty ABC · Bán lẻ thời trang">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Bạn đang cần hỗ trợ gì?</label>
+        <textarea class="form-textarea" placeholder="Mô tả ngắn về vấn đề hoặc mục tiêu của doanh nghiệp bạn..."></textarea>
+      </div>
+      <div class="form-check">
+        <input type="checkbox" id="agree" required>
+        <label for="agree">Tôi đồng ý để Sellator liên hệ tư vấn qua điện thoại / Zalo. Mọi thông tin được bảo mật.</label>
+      </div>
+      <button class="form-submit" type="submit">Gửi yêu cầu tư vấn</button>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-left">
+    <div class="footer-logo"><img src="logo.png" alt="Sellator"></div>
+    <div>
+      <div class="footer-brand">Sellator</div>
+      <div class="footer-tagline">you win, then us</div>
+    </div>
+  </div>
+  <div class="footer-links">
+    <a href="#about">Về chúng tôi</a>
+    <a href="#services">Dịch vụ</a>
+    <a href="#blog">Kiến thức</a>
+    <a href="#faq">FAQ</a>
+    <a href="#contact">Liên hệ</a>
+  </div>
+  <div class="footer-copy">©2025 Sellator. All rights reserved.</div>
+</footer>
+
+<script>
+  // Nav scroll effect
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // Reveal on scroll
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+
+  // FAQ toggle
+  function toggleFaq(el) {
+    const item = el.parentElement;
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!wasOpen) item.classList.add('open');
+  }
+
+  // Form submit
+  async function submitForm(event) {
+    event.preventDefault();
+    const btn = event.target.querySelector('.form-submit');
+    const originalText = btn.textContent;
+    
+    // Thu thập dữ liệu từ form
+    const formData = {
+        name: event.target.querySelectorAll('.form-input')[0].value,
+        phone: event.target.querySelectorAll('.form-input')[1].value,
+        email: event.target.querySelectorAll('.form-input')[2].value,
+        company: event.target.querySelectorAll('.form-input')[3].value,
+        message: event.target.querySelector('.form-textarea').value
+    };
+
+    btn.textContent = 'Đang gửi...';
+    btn.disabled = true;
+
+    try {
+        // Gửi đến Google Script thay vì gửi trực tiếp đến Telegram
+        const scriptURL = 'https://script.google.com/macros/s/AKfycby1V-KAYMaFSc3EGLYc89FBTRmaGPKoH-vjSNVnP6k2CZeSxEp6WODSTgyCphU75XU1/exec';
+        
+        await fetch(scriptURL, {
+            method: 'POST',
+            mode: 'no-cors', // Dùng no-cors để tránh lỗi CORS khi gửi từ domain khác
+            body: JSON.stringify(formData)
+        });
+
+        btn.textContent = 'Đã gửi! Chúng tôi sẽ liên hệ sớm ✓';
+        btn.style.background = 'oklch(55% 0.13 145)';
+        btn.style.color = 'white';
+    } catch (error) {
+        console.error('Lỗi:', error);
+        alert('Có lỗi xảy ra, vui lòng liên hệ trực tiếp qua Zalo.');
+        btn.textContent = originalText;
+        btn.disabled = false;
+    }
+  }
+</script>
+
+</body>
+</html>
